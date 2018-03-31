@@ -25,7 +25,7 @@ http://konlpy-ko.readthedocs.io/ko/v0.4.3/
 7. spyder 재시작
 '''
 
-
+## 트위터 분석기
 from konlpy.tag import Twitter
 '''트위터 분석기
 - 빅데이터 등에서 간단한 한국어 처리를 통해 색인어를 추출하는 데에 있음. 
@@ -55,6 +55,25 @@ text
 # norm : "그래욕 ㅋㅋㅋ" -> 그래요
 # stem : "그렇다" 원형을 찾아 준다.
 
+>>> from konlpy.tag import Twitter
+>>> twitter = Twitter()
+>>> print(twitter.morphs(u'단독입찰보다 복수입찰의 경우'))
+# ['단독', '입찰', '보다', '복수', '입찰', '의', '경우', '가']
+>>> print(twitter.nouns(u'유일하게 항공기 체계 종합개발 경험을 갖고 있는 KAI는'))
+# ['유일하', '항공기', '체계', '종합', '개발', '경험']
+>>> print(twitter.phrases(u'날카로운 분석과 신뢰감 있는 진행으로'))
+# ['분석', '분석과 신뢰감', '신뢰감', '분석과 신뢰감 있는 진행', '신뢰감 있는 진행', '진행', '신뢰']
+>>> print(twitter.pos(u'이것도 되나욬ㅋㅋ'))
+# [('이', 'Determiner'), ('것', 'Noun'), ('도', 'Josa'), ('되나욬', 'Noun'), ('ㅋㅋ', 'KoreanParticle')]
+>>> print(twitter.pos(u'이것도 되나욬ㅋㅋ', norm=True))
+# [('이', 'Determiner'), ('것', 'Noun'), ('도', 'Josa'), ('되', 'Verb'), ('나요', 'Eomi'), ('ㅋㅋ', 'KoreanParticle')]
+>>> print(twitter.pos(u'이것도 되나욬ㅋㅋ', norm=True, stem=True))
+# [('이', 'Determiner'), ('것', 'Noun'), ('도', 'Josa'), ('되다', 'Verb'), ('ㅋㅋ', 'KoreanParticle')]
+
+
+
+## 꼬꼬마 분석기 (http://kkma.snu.ac.kr/)
+''' 휴리스틱, 히든 마르코프 모델'''
 
 from konlpy.tag import Kkma
 k = Kkma()
@@ -62,9 +81,12 @@ txt = "통찰력은 사물이나 현상의 원인과 결과를 이해하고 간�
 
 # 문장을 분석
 k.sentences(txt)
+'''['통찰력은 사물이나 현상의 원인과 결과를 이해하고 간파하는 능력이다.', 
+'통찰력을 얻는 좋은 방법은 독서이다.']'''
 
 # 명사분석
 k.nouns(txt)
+'''['통찰력', '사물', '현상', '원인', '결과', '이해', '간파', '능력', '방법', '독서']'''
 
 # 형태소 분석
 k.pos(txt)
