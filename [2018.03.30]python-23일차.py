@@ -50,7 +50,6 @@ from konlpy.tag import Twitter
 
 t = Twitter()
 text = t.pos("아버지가방에들어가신다",norm=True,stem=True)
-text = t.sentences("아버지가방에들어가신다",norm=True,stem=True)
 text
 # norm : "그래욕 ㅋㅋㅋ" -> 그래요
 # stem : "그렇다" 원형을 찾아 준다.
@@ -95,6 +94,7 @@ k.pos(txt)
 from konlpy.tag import Hannanum
 h = Hannanum()
 h.nouns(txt)
+h.pos(txt)
 
 
 from konlpy.tag import Twitter
@@ -168,12 +168,6 @@ ko.collocations()  # 연이어 발생되는 단어들
 
 nltk.download('stopwords')
 #스파이더에서 이거 실행시키면 됨
-
-nltk.download('stopwords')
-[nltk_data] Downloading package stopwords to
-[nltk_data]     C:\Users\stu\AppData\Roaming\nltk_data...
-[nltk_data]   Unzipping corpora\stopwords.zip.
-Out[66]: True
 
 
 아나콘다 프롬프트 들어가서
