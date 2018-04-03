@@ -51,6 +51,7 @@ from konlpy.tag import Twitter
 t = Twitter()
 text = t.pos("아버지가방에들어가신다",norm=True,stem=True)
 text
+t.pos("아버지가방에들어가신다",norm=False,stem=False)
 # norm : "그래욕 ㅋㅋㅋ" -> 그래요
 # stem : "그렇다" 원형을 찾아 준다.
 
