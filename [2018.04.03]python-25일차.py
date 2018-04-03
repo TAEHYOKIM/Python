@@ -105,6 +105,8 @@ def set_contact():
     conIns.print_info()  # 출력
     conIns.input()  # 테이블에 추가
 
+
+
 import sqlite3
 
 #conn = sqlite3.connect(':memory:')  
@@ -123,6 +125,7 @@ conn.commit()
 # conn.rollback()
 c.close()
 conn.close()
+
 
 
 -------------------------------------------------------------------------------
@@ -483,19 +486,4 @@ print(c.__dict__)
 
 
 print(Child.__bases__)  # Child 클래스의 부모 확인 (<class '__main__.Parents'>,)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
