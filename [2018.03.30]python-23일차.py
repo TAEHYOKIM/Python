@@ -72,7 +72,7 @@ text
 
 
 ## 꼬꼬마 분석기 (http://kkma.snu.ac.kr/)
-''' 휴리스틱, 히든 마르코프 모델'''
+''' 휴리스틱, 히든 마르코프 모델, 편집거리'''
 
 from konlpy.tag import Kkma
 k = Kkma()
