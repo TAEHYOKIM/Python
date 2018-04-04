@@ -340,7 +340,6 @@ data1.plot(kind = 'barh', grid = True)
 
 print(plt.style.available)
 
-dict = {'월':}
 
 
 # 선생님 풀이
@@ -358,13 +357,13 @@ def create_bar_chart(data,labels,bar):
     positions = range(1, num_bars+1)
     
     if bar == 1:        
-        plt.bar(positions, data, align='center')
+        plt.bar(positions, data, align='center')  # 세로 막대
         plt.xticks(positions, labels)
         plt.xlabel('요일')
         plt.ylabel('걸음수')
        
     else:
-         plt.barh(positions, data, align='center')
+         plt.barh(positions, data, align='center')  # 가로 막대
          plt.yticks(positions, labels)
          plt.xlabel('걸음수')
          plt.ylabel('요일')
