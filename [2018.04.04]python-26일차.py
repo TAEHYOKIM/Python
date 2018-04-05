@@ -421,10 +421,11 @@ plt.barh(range(1,6), range(1,6))
 
 '''import 실습'''
 import sys
-sys.path  # /Users/hbk/data/ 존재
+sys.path  # /Users/hbk/data/ 존재여부 확인(스파이더 재부팅시 사라짐)
+sys.path.append('/Users/hbk/data/')
 
-from walkGragh import create_bar_chart
-w = walkGragh.walkGragh()
+from walkGragh import walkGragh
+w = walkGragh()
 w.create_bar_chart(step,labels,2)
 
 from walkGragh import *
