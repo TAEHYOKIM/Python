@@ -116,7 +116,7 @@ c = conn.cursor()
 #c.execute('drop table contact')
 c.execute('create table contact (name text,pn text, mail text,addr text)')
     
-set_contact()
+set_contact()  # 컬럼별 입력
 
 c.execute('select * from contact')
 print(c.fetchall())  # 위 내용 출력
