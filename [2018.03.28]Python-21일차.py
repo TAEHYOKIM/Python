@@ -147,7 +147,7 @@ with urlopen(url) as f:  # url
  - 써야되는 이유 : 로그인하면서 크롤링을 한번에 하려면 동적으로 해야됨
 
 # 1.설치
-pip install selenium
+pip3 install selenium
 
 # 2.selenium 드라이버 설치
 http://phantomjs.org

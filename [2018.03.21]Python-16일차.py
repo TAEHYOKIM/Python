@@ -13,7 +13,6 @@ name.split('.')[0]
           (단, glob을 이용하지 마세요.)
 '''
 import os
-import glob
 import pandas as pd
 from pandas import Series, DataFrame
 
