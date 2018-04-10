@@ -7,10 +7,12 @@ import time
 from urllib.request import urlopen, urlretrieve
 from PIL import Image
 
+mdict = {}
 def posterSucker(year1,year2):
-    driver = webdriver.PhantomJS('/Users/hbk/data/phantomjs') #팬텀js 드라이버 경로 선언
+    driver = webdriver.Chrome("/Users/hbk/data/chromedriver")
+    #driver = webdriver.PhantomJS('/Users/hbk/data/phantomjs') #팬텀js 드라이버 경로 선언
     driver.set_page_load_timeout(30)
-    mdict = {}
+    global mdict
     for i in range(year1,year2+1):
         
         j = 1
@@ -36,31 +38,63 @@ def posterSucker(year1,year2):
 
         long2 = len(mdict.keys())
         print(str(i)+'년도 영화 포스터 파일 수집')
-        img = ''
         for i in mdict.keys(): #딕셔너리에서 글번호만 뽑아 돌림
-            url = 'https://movie.naver.com/movie/bi/mi/photoViewPopup.nhn?code='+ str(i) #포스터 사진 사이트로 이동
+            url = 'https://movie.naver.com/movie/bi/mi/photoViewPopup.nhn?movieCode=' + str(i) #포스터 사진 사이트로 이동
+            driver.get(url)
+            driver.implicitly_wait(5)
+            time.sleep(2)
+            try: #포스터가 없을때
+                alert = driver.switch_to_alert()  #없다는 팝업 확인
+                alert.accept() #확인 버튼 누름
+                mdict[str(i)] = [mdict[str(i)],'none'] #딕셔너리에 포스터 없음 none으로 저장
+            except: #포스터가 있을때
+                soup = BeautifulSoup(driver.page_source, 'html.parser') #소스 가져와서
+                with urlopen(soup.find('img',id='targetImage')['src']) as f: #이미지 테그에서 파일명만 추출
+                    with open('/Users/hbk/data/poster/' + i+'.jpg', 'wb') as w: #이미지 파일 저장
+                        img = f.read() 
+                        w.write(img) #포스터 파일 저장
+                        #im = Image.open('/Users/hbk/data/poster/' + i+'.jpg') #이미지 열기
+                        #mdict[str(i)] = [mdict[str(i)],im.size] #이미지 사이즈를 딕션너리에 넣어줌
+            long2 -= 1
+            print(str(long2)+'개 남음')        
+             
+    driver.close()
+    return mdict
+posterSucker(2020,2020)           
+        
+        
+###############################################################################        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        for i in mdict.keys(): #딕셔너리에서 글번호만 뽑아 돌림
+            url = 'https://movie.naver.com/movie/bi/mi/photoViewPopup.nhn?movieCode='+ str(i) #포스터 사진 사이트로 이동
             driver.get(url)
             driver.implicitly_wait(10)
             soup = BeautifulSoup(driver.page_source, 'html.parser') #소스 가져와서
             
             try:
-                url1 = soup.find('img',id='targetImage')['src']
-                if 
-                with urlopen(url1) as f:
+                with urlopen(soup.find('img',id='targetImage')['src']) as f:
                     with open('/Users/hbk/data/poster/'+str(i)+'.jpg','wb') as w: # 저장위치 지정
                         img = f.read()
                         w.write(img)
-                        im = Image.open('/Users/hbk/data/poster/'+str(i)+'.jpg')
-                        mdict[str(i)] = [mdict[str(i)],im.size()]
+                        #im = Image.open('/Users/hbk/data/poster/'+str(i)+'.jpg')
+                        #mdict[str(i)] = [mdict[str(i)],im.size()]
                 long2 -= 1
                 print(long2,'개 남음')       
                  
             except TypeError:
                 mdict[str(i)] = [mdict[str(i)],'none'] # 그림파일 없으면 none
-                continue
+                
             except OSError:
+                continue
                 # 없는 파일번호 오류발생하면 다음 키번호로 넘어가자
-
     driver.close()
     return mdict
 posterSucker(2020,2020)                
@@ -89,8 +123,10 @@ url = 'https://movie.naver.com/movie/bi/mi/photoViewPopup.nhn?code=164122'
 driver = webdriver.PhantomJS('/Users/hbk/data/phantomjs')
 driver.get(url)
 soup = BeautifulSoup(driver.page_source, 'html.parser')
-url1 = soup.find('#content > div.article > div.mv_info_area > div.poster > a > img')
-with urlopen(soup.find('img',id='targetImage')['src']) as f:
+soup.find('img','src')
+url1 = soup.select('#content > div.article > div.mv_info_area > div.poster > a > img > src')
+url1
+                 with urlopen(soup.find('img',id='targetImage')['src']) as f:
     with open('/Users/hbk/data/poster/test.jpg','wb') as w:
         img = f.read()
         w.write(img)
