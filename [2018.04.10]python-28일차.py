@@ -207,7 +207,8 @@ for i,j in ([0,0],[0,1],[1,0],[1,1]):
 # 층을 쌓으면 XOR게이트를 구현할 수 있다.
 
 
-# Step Function
+## Step Function
+#  : 임계값을 경계로 출력이 바뀌는 함수, 입력이 0을 넘으면 1 출력 그외에는 0 출력     
 
 def step_func(x):
     if x > 0:
@@ -231,33 +232,174 @@ y
 def step_func(x):  # 이렇게 해결(이게 for문 안 사용하고 작성해서 좋다)
     y = x > 0
     return y.astype(np.int)
-
 step_func(np.array([-1.0,1.0,2.0]))
 
 
+def step_func(x):
+    return np.array(x>0,dtype=np.int)
+step_func(np.array([-1.0,1.0,2.0]))
 
-# Sigmoid Function
+import matplotlib.pylab as plt
 
+x = np.arange(-5.0,5.0,0.1)  # -5.0 ~ 5.0 0.1+
+y = step_func(x)
 
-
-
-
-
-
-
-
-
-
-
+plt.plot(x,y)
+plt.ylim(-0.1,1.1)
+plt.show()
 
 
 
+## Sigmoid Function
+#  : 신경망에서는 활성화 함수로 시그모이드 함수를 이용하여 신호를 변환하고 그 변환된 신호를 다음 뉴런에 전달한다.
+
+def sigmoid(x):
+    return 1/(1+np.exp(-x))
+
+import math
+Pi = math.pi
+sigmoid(Pi)
+sigmoid(0)
 
 
+x = np.arange(-5.0,5.0,0.1)
+y = sigmoid(x)
+
+plt.grid()
+plt.plot(x,y)
+plt.ylim(-0.1,1.1)
+plt.show()
 
 
+# 정리 
+# : 계단함수는 0과 1 중 하나의 값만 전달한다. 
+#   시그모이드 함수는 0과 1사이의 실수값으로 전달한다.
+
+# 공통점
+# - 시그모이드 함수는 곡선, 계단함수는 계단처럼 구브러진 직선으로
+#   동시에 비선형함수로 분류된다.(그래서 신경망에서 사용가능 / 선형함수는 직선하나로 표현한다.)
+# - 신경망에서는 활성화함수로 비선형함수를 사용해야 한다.
+# - 비선형함수를 사용해야 은닉층을 표현할 수 있다.
 
 
+## ReLU(Rectified Linear Unit)
+#  : 입력이 0을 넘으면 그 입력을 그대로 출력하고 0이하면 0을 출력한다.
+
+x : x > 0
+0 : x <= 0
+
+
+def relu(x):
+    return np.maximum(0,x)
+
+relu(2)
+relu(0)
+relu(-3)
+
+
+a = np.array([1,2,3,4])
+a
+np.ndim(a)  # 배열의 차수
+a.shape  # 배열의 모양 행(가로) * 열(세로)
+
+b = np.array([[1,2],[3,4],[5,6]])
+b
+np.ndim(b)
+b.shape  # (3,2)
+
+
+a = np.array([[1,2],[3,4]])
+b = np.array([[5,6],[7,8]])
+
+np.dot(a,b)  # 행렬곱
+
+
+a = np.array([[1,2,3],[4,5,6]])
+b = np.array([[1,2],[3,4],[5,6]])
+
+a.shape
+b.shape
+
+np.dot(a,b)
+np.dot(b,a)
+
+
+a = np.array([[1,2],[3,4],[5,6]])
+b = np.array([7,8])
+
+a.shape
+b.shape
+
+np.dot(a,b)
+
+
+x = np.array([1.0,0.5])  # 입력층 2개
+w1 = np.array([[0.1,0.3,0.5],[0.2,0.4,0.6]])  # 가중치
+b1 = np.array([0.1,0.2,0.3])  # 편향
+
+# 은닉층 생성
+a1 = np.dot(x,w1) + b1
+a1  # 3개
+
+# Activation Function
+z1 = sigmoid(a1)  
+z1
+
+# 다음층으로 넘기는데 은닉층을 생성하고자 한다면
+w2 = np.array([[0.1,0.4],[0.2,0.5],[0.3,0.6]])
+w2
+w2.shape
+
+b2 = np.array([0.1,0.2])
+b2
+
+a2 = np.dot(z1,w2) + b2  # 은닉층
+a2
+
+# Activation Function
+z2 = sigmoid(a2)
+z2
+
+# 다음층(출력층)으로 넘기려고 해도 가중치, 편향 계산
+w3 = np.array([[0.1,0.3],[0.2,0.4]])
+b3 = np.array([0.1,0.2])
+
+a3 = np.dot(z2,w3) + b3
+a3
+
+
+## identity_function : input = output
+def identity_function(x):
+    return x
+
+y = identity_function(a3)
+y
+
+
+## softmax function : 입력값(최종값)을 받아서 확률값으로 출력
+
+a = np.array([0.3,2.9,4.0])
+
+exp_a = np.exp(a)  # 지수함수
+exp_a
+
+sum_exp_a = np.sum(exp_a)  # 지수값의 합
+sum_exp_a
+
+# output 
+y = exp_a / sum_exp_a  # 지수값/지수값의 합
+y
+
+sum(y) # 1
+np.sum(y)
+
+
+def softmax(x):
+    return np.exp(x) / np.sum(np.exp(x))
+
+softmax(a)
+
+# 다중분류시 softmax 사용
 
 
 
