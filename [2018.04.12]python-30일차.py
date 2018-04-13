@@ -134,7 +134,7 @@ sess.run(y,feed_dict={p1:10,p2:20}) # 30
 # 함수
 '''
 tf.add             +
-tf.substact        -
+tf.subtract        -
 tf.multiply        *
 tf.div             /(몫)
 tf.truediv         /
@@ -172,7 +172,7 @@ sess.run(tf.maximum(0,1))
 sess.run(tf.minimum(0,1))
 sess.run(tf.cos(1.57))
 sess.run(tf.sin(np.pi/2))
-
+sess.run(tf.subtract(1,2))
 
 '''
 [문제199] tensorflow 상수를 이용해서 아래와 같이 결과를 출력하는 프로그램을 만드세요.
