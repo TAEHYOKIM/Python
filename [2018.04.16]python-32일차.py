@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Python-32일차(2018.4.14)
+Python-32일차(2018.4.16)
 """
 
 '''
@@ -372,7 +372,7 @@ X = tf.placeholder(tf.float32, [None, 16])
 Y = tf.placeholder(tf.int32, [None, 1])  # 0 ~ 6
 Y_one_hot = tf.one_hot(Y, nb_classes)  # one hot
 print("one_hot", Y_one_hot)
-Y_one_hot = tf.reshape(Y_one_hot, [-1, nb_classes])
+Y_one_hot = tf.reshape(Y_one_hot, [-1, nb_classes]) # -1: None
 print("reshape", Y_one_hot)
 
 W = tf.Variable(tf.random_normal([16, nb_classes]), name='weight')
@@ -424,7 +424,7 @@ with tf.Session() as sess:
 1       6       6          1 0 0
 1       7       7          1 0 0
 
-# 위 세가지 분류를 저렇게 만드는게 one-hot-incoding 
+# 위 세가지 분류를 저렇게 만드는게 one-hot-encoding 
 
 
 ## Multi Classification(Softmax Classifier) 
@@ -470,7 +470,7 @@ for step in range(1, 2001):
 
 print('Answer')
 a = sess.run(hypothesis, feed_dict={X:[[1, 11, 7]]})
-print(a, sess.run(tf.argmax(a,1)))
+print(a, sess.run(tf.argmax(a,1))) # 최대값(확률값이 높은) 뽑음 : one_hot 기법
 
 b = sess.run(hypothesis, feed_dict={X:[[1, 3, 4]]})
 print(a, sess.run(tf.argmax(b,1)))
@@ -485,4 +485,4 @@ print(all, sess.run(tf.argmax(all,1)))
 sess.close()
 
 
-# 숙제 : 유방암 자료를 가지고 신경망으로 분류해보기 
+# 숙제 : 유방암 자료를 가지고 신경망으로 분류해보기 (데이터 표준화 또는 정규화도 생각해 보자)
