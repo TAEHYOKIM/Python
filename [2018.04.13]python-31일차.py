@@ -241,13 +241,206 @@ y_data
 X = tf.placeholder(tf.float32,shape=(2,1))
 Y = tf.placeholder(tf.float32)
 
-w1 = tf.Variable(tf.random_uniform([1],0,10,dtype=tf.float32,seed=0))
-w2 = tf.Variable(tf.random_uniform([1],0,10,dtype=tf.float32,seed=0))
-W = tf.placeholder(tf.float32,shape=(1,2))
+#w1 = tf.Variable(tf.random_uniform([1],0,10,dtype=tf.float32,seed=0))
+#w2 = tf.Variable(tf.random_uniform([1],0,10,dtype=tf.float32,seed=0))
+#W = tf.placeholder(tf.float32,shape=(1,2))
+
+W = tf.Variable(tf)
 
 b = tf.Variable(tf.random_uniform([1],0,100,dtype=tf.float32,seed=0))
 
-H = tf.matmul()
+H = tf.matmul(W,X) + b
 
-rmse = 
+rmse = tf.sqrt(tf.reduce_mean(tf.square(H-Y))) 
+learning_rate = 0.1
+gradient_descent = tf.train.GradientDescentOptimizer(learning_rate).minimize(rmse)
 
+with tf.Session() as sess:
+    sess.run(tf.global_variables_initializer())
+    for step in range(2000):
+        sess.run(W,feed_dict={[w1,w2]})
+        sess.run(gradient_descent)
+        if step % 100 == 0:
+            print(step,sess.run(W))
+    
+    
+sess = tf.Session()    
+sess.run(W,feed_dict={1,2})    
+
+
+
+# logistic regression
+
+'''
+공부시간                 2   4   6   7   8   10   12   14
+합격(1)/불합격(0)         0   0   0   ?   1   1    1    1
+'''
+# 시그모이드로 경사하강법 사용시 오차발생시 제곱을 해버리면 안됨(구브러져버림?)
+# 그래서 로그를 써야된다고 함
+
+
+data = [[2,0],[4,0],[6,0],[8,1],[10,1],[12,1],[14,1]]
+
+x_data = [i[0] for i in data] 
+x_data
+
+y_data = [i[1] for i in data]
+y_data
+
+# 이제 기울기, 절편을 찾아나서자
+import tensorflow as tf
+a = tf.Variable(tf.random_normal([1],dtype=tf.float64,seed=0))
+b = tf.Variable(tf.random_normal([1],dtype=tf.float64,seed=0))
+
+# hypothesis
+y = a * x_data + b
+
+# sigmoid function
+import numpy as np
+y = 1/(1 + np.e**-(a*x_data+b))
+
+# cross entropy error function : 두가지 범위를 구분해서 합해놓은 것
+cost = -tf.reduce_mean( np.array(y_data) * tf.log(y) + (1-np.array(y_data)) * tf.log(1-y) )
+
+learning_rate = 0.1
+gradient_descent = tf.train.GradientDescentOptimizer(learning_rate).minimize(cost)
+
+with tf.Session() as sess:
+    sess.run(tf.global_variables_initializer())
+    for step in range(5000):
+        sess.run(gradient_descent)
+        if step % 100 == 0:
+            print(step,sess.run(cost),sess.run(a),sess.run(b))
+
+1/(1+np.exp(-1))
+1/(1+np.e**-1)
+
+1/(1+np.exp(-1.55135671*7+10.67100171))
+
+
+
+'''
+[문제203]  XOR  Logistic Regression Classifier Tensorflow을 이용해서  프로그램 생성하세요.
+'''
+# XOR : 은닉층이 필요하다
+  0 0 0
+  0 1 1
+  1 0 1
+  1 1 0
+
+import numpy as np
+x = np.array([[0,0],[0,1],[1,0],[1,1]],dtype=np.float32)
+x
+
+y = np.array([[0],[1],[1],[0]],dtype=np.float32)
+y
+
+
+
+import tensorflow as tf
+
+def step(x):
+    if sess.run(x) > 0:
+        return 1
+    else:
+        return 0
+    
+x = tf.Variable(x)
+x
+
+w1 = tf.Variable(tf.random_uniform((2,1),dtype=tf.float32,seed=0))
+w1
+
+b = tf.Variable(tf.random_uniform((4,1),dtype=tf.float32,seed=0))
+b
+
+h1 = tf.matmul(x,w1) + b
+h1
+    
+y_nand = tf.constant([[1.],[1.],[1.],[0.]])
+y_nand
+    
+cost = -tf.reduce_mean( np.array(y_nand) * tf.log(h1) + (1-np.array(y_nand)) * tf.log(1-h1) )
+
+gradient_descent = tf.train.GradientDescentOptimizer(learning_rate=0.1).minimize(cost)
+
+
+with tf.Session() as sess:
+    sess.run(tf.global_variables_initializer())
+    for i in range(2000):
+        print(sess.run(cost))
+
+
+
+x1 = tf.constant([0,1,0,1],dtype=tf.float32)
+x2 = tf.constant([0,0,1,1],dtype=tf.float32)
+
+w1 = tf.Variable(tf.random_normal([1],dtype=tf.float32,seed=0))
+w2 = tf.Variable(tf.random_normal([1],dtype=tf.float32,seed=0))
+b = tf.Variable(tf.random_normal([1],dtype=tf.float32,seed=0))
+
+h1 = w1*x1 + w2*x2 + b
+h1 = 1/(1+np.e**-(w1*x1 + w2*x2 + b))
+
+y_nand = tf.constant([1,1,1,0],dtype=tf.float32)
+y_nand
+    
+cost = -tf.reduce_mean( np.array(y_nand) * tf.log(h1) + (1-np.array(y_nand)) * tf.log(1-h1) )
+
+gradient_descent = tf.train.GradientDescentOptimizer(learning_rate=0.1).minimize(cost)
+
+tf.subscribe
+
+
+# 선생님 풀이
+import tensorflow as tf
+import numpy as np
+
+tf.set_random_seed(777)  # seed 미리 설정할 수 있다 (seed=0 하는거랑 같다) 
+
+
+x_data = [[0, 0],
+          [0, 1],
+          [1, 0],
+          [1, 1]]
+y_data = [[0],
+          [1],
+          [1],
+          [0]]
+
+x_data = np.array(x_data, dtype=np.float32)
+y_data = np.array(y_data, dtype=np.float32)
+
+X = tf.placeholder(tf.float32, [None, 2])  # 열 2개로 고정 
+Y = tf.placeholder(tf.float32, [None, 1])  # 열 1개로 고정
+
+W1 = tf.Variable(tf.random_normal([2, 2]), name='weight1')  # 2행(입력값 수) 2열(은닉층 노드수) 행렬구조
+b1 = tf.Variable(tf.random_normal([2]), name='bias1')
+layer1 = tf.sigmoid(tf.matmul(X, W1) + b1)  # 은닉층1     
+
+W2 = tf.Variable(tf.random_normal([2, 1]), name='weight2')
+b2 = tf.Variable(tf.random_normal([1]), name='bias2')
+hypothesis = tf.sigmoid(tf.matmul(layer1, W2) + b2) # 출력층
+
+
+cost = -tf.reduce_mean(Y * tf.log(hypothesis) + (1 - Y) * tf.log(1 - hypothesis))
+
+train = tf.train.GradientDescentOptimizer(learning_rate=0.1).minimize(cost)
+
+
+with tf.Session() as sess:
+    
+    sess.run(tf.global_variables_initializer())
+
+    for step in range(10001):
+        sess.run(train, feed_dict={X: x_data, Y: y_data})
+        if step % 1000 == 0:
+            print(step, sess.run(cost, feed_dict={X: x_data, Y: y_data}), sess.run([W1, W2]))
+
+  
+    h  = sess.run(hypothesis,feed_dict={X: x_data, Y: y_data})
+    print("\nHypothesis: ", h)
+
+
+
+    

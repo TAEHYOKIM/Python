@@ -226,6 +226,15 @@ with tf.Session() as sess:
 
 ## Logistic(Binary, sigmoid) Classification
 
+#x0     x1      x2      y
+1       2       1       0
+1       3       2       0
+1       3       4       0
+1       5       5       1
+1       7       5       1
+1       2       5       1
+
+
 import tensorflow as tf
 import numpy as np
 
@@ -234,7 +243,7 @@ xy
 # skiprows = 1(행수) , unpack : 뒤집는다
 
 x_data = xy[0:-1]
-y_data = xy[-1]
+y_data = xy[-1] # label
 
 print ('x', x_data)
 print( 'y', y_data)
@@ -242,7 +251,7 @@ print( 'y', y_data)
 X = tf.placeholder(tf.float32)
 Y = tf.placeholder(tf.float32)
 
-W = tf.Variable(tf.random_normal([1, 3],seed=0), name='weight') 
+W = tf.Variable(tf.random_normal([1, 3],seed=0), name='weight') # X 
 b = tf.Variable(tf.random_normal([1],seed=0), name='bias') 
 
 hypothesis = tf.sigmoid(tf.matmul(W, X)+b)
@@ -343,9 +352,6 @@ with tf.Session() as sess:
         cost_val = sess.run(cost, feed_dict = {X:train,Y:label[:80]})
         if step % 100 == 0:
             print(step,cost_val)
-
-
-
 
 
 ## Lab 6 Softmax Classifier
