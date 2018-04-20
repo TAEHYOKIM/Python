@@ -140,7 +140,7 @@ with tf.Session() as sess:
 
 # 선생님 풀이
     
-# Linear Regression
+## 31-1. Linear Regression
 
 import tensorflow as tf
 

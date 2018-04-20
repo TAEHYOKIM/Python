@@ -2,7 +2,7 @@
 Python-28일차(2018.4.10)
 """
 
-## Perceptron 함수
+## 28-1. Perceptron 함수
     # 각 논리연산자처럼 결과값이 나올수 있도록 가중치와 임계값을 정의
     
 def Perceptron(x1,x2,logic):

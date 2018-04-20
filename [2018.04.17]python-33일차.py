@@ -3,6 +3,7 @@
 """
 Python-33일차(2018.4.17)
 """
+# train_new.txt
 
 #x0,x1,x2,y 
 1,2,1,0
@@ -25,6 +26,8 @@ Python-33일차(2018.4.17)
 1       6       6          1 0 0
 1       7       7          1 0 0
 
+
+## 33-1. Multi_Classification_one_hot_encoding
 
 import tensorflow as tf
 import numpy as np
