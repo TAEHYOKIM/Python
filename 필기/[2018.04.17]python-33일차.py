@@ -129,7 +129,7 @@ import numpy as np
 
 tf.set_random_seed(777) 
 
-xy = np.loadtxt('c:/data/data_zoo.csv', delimiter=',', dtype=np.float32)
+xy = np.loadtxt('/Users/hbk/data/data_zoo.csv', delimiter=',', dtype=np.float32, skip_header = 20)
 x_data = xy[0:99, 0:-1]
 y_data = xy[0:99, [-1]]
 
