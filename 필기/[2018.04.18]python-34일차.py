@@ -66,14 +66,14 @@ layer1 = tf.nn.relu(tf.matmul(X,W1)+b1)
 W2 = tf.Variable(tf.random_normal([10,40]), name='weight') 
 b2 = tf.Variable(tf.random_normal([40]), name='bias')
 #layer2 = tf.nn.relu(tf.matmul(layer1,W2)+b2) # Activation Function ReLu 함수
-layer2 = tf.nn.relu(tf.matmul(layer1,W2)+b2) # Activation Function sigmoid 함수
+layer2 = tf.nn.relu(tf.matmul(layer1,W2)+b2) # Activation Function ReLu 함수
 
 
 # 은닉층2 Hidden Layer2
 W3 = tf.Variable(tf.random_normal([40,3]), name='weight') 
 b3 = tf.Variable(tf.random_normal([3]), name='bias')
 #layer2 = tf.nn.relu(tf.matmul(layer1,W2)+b2) # Activation Function ReLu 함수
-layer3 = tf.nn.relu(tf.matmul(layer2,W3)+b3) # Activation Function sigmoid 함수
+layer3 = tf.nn.relu(tf.matmul(layer2,W3)+b3) # Activation Function ReLu 함수
 
 
 # 출력층 Output Layer
@@ -98,13 +98,13 @@ sess.run(tf.global_variables_initializer())
 for step in range(10001): 
     sess.run(optimizer, feed_dict={X: train, Y: label}) 
     if step % 100 == 0: 
-        loss, acc = sess.run([cost, accuracy], feed_dict={ X: train, Y: label}) 
-        print("Step: {:5}\tLoss: {:.3f}\tAcc: {:.2%}".format( step, loss, acc)) 
+        loss, acc = sess.run([cost, accuracy], feed_dict={X: train, Y: label}) 
+        print("Step: {:5}\tLoss: {:.3f}\tAcc: {:.2%}".format(step, loss, acc)) 
 
 
 
 # overfitting이 안나려면! 다양한 학습 데이터가 필요하다.
-# overshooting은 learning rate값이 좋지 않으면,, loss값이 튕겨나간다!
+# overshooting은 learning rate값이 좋지 않으면, loss값이 튕겨나간다!
 
 
 
